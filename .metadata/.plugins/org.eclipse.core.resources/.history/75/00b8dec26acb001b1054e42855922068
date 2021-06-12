@@ -1,0 +1,17 @@
+package com.app.dto;
+
+import com.app.model.College;
+
+public class StudentData {
+	
+	private Long studentId;
+	private String name;
+	private String email;
+	private String address;
+	private Long   collegeId;
+	
+	private College college;
+	
+	
+
+}

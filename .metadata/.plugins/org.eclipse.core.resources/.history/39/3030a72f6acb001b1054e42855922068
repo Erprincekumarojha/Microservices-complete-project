@@ -1,0 +1,33 @@
+package com.app.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import com.app.model.Student;
+import com.app.repository.StudentRepository;
+
+@Service
+public class StudentService {
+	
+	@Autowired
+	private RestTemplate restTemplate;
+	
+	@Autowired
+	private StudentRepository studentRepository;
+
+	public Student saveStudent(Student student) {
+		
+		return studentRepository.save(student);
+	}
+
+	public Student getStudentData(Long studentId) {
+		
+		
+		
+		
+		return studentRepository.findByStudentId(studentId);
+	}
+	
+
+}

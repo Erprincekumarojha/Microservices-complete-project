@@ -1,0 +1,6 @@
+server:
+  port: 8022
+  
+spring:
+  application:
+    name: STUDENT-SERVICE  

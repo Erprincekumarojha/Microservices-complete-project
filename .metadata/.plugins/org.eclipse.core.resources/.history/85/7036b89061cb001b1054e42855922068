@@ -1,0 +1,18 @@
+package com.app.controller;
+
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.model.College;
+
+
+@RestController
+@RequestMapping("/college")
+public class CollegeController {
+	
+	public college saveCollegeData(@RequestBody College college) {
+		
+	}
+
+}

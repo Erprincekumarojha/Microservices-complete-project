@@ -1,0 +1,51 @@
+server:
+  port: 8888
+  
+spring:
+  application: 
+    name: CLOUD-GATEWAY 
+  cloud:
+    gateway:
+      routes:
+      - id: USER-SERVICE
+        uri: lb://USER-SERVICE
+        predicates:
+        - Path=/users/**
+        filters:
+        - name: CircuitBreaker
+          args:
+            name: USER-SERVICE
+            fallbackuri: forward:/userServiceFollBack
+ 
+      - id: DEPARTMENT-SERVICE
+        uri: lb://DEPARTMENT-SERVICE
+        predicates:
+        - Path=/departments/**
+        filters:
+        - name: CircuitBreaker
+          args:
+            name: DEPARTMENT-SERVICE
+            fallbackuri: forward:/departmentServiceFollBack
+
+hystrix:
+  command:
+    fallbackcmd:
+      execution:
+        isolation:
+          thread: timeoutInMilliseconds:4000
+          
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream, info, health
+      
+Eureka:
+  client:
+    register-with-eureka: true
+    fetch-registery: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    instance:
+      hostname: localhost      
+            

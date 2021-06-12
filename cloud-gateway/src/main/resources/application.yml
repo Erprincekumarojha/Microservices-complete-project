@@ -1,0 +1,51 @@
+server:
+  port: 8025
+  
+spring:
+  application: 
+    name: CLOUD-GATEWAY 
+  cloud:
+    gateway:
+      routes:
+      - id: COLLEGE-SERVICE
+        uri: lb://COLLEGE-SERVICE
+        predicates:
+        - Path=/college/**
+        filters:
+        - name: CircuitBreaker
+          args:
+            name: COLLEGE-SERVICE
+            fallbackuri: forward:/userServiceFollBack
+ 
+      - id: STUDENT-SERVICE
+        uri: lb://STUDENT-SERVICE
+        predicates:
+        - Path=/student/**
+        filters:
+        - name: CircuitBreaker
+          args:
+            name: STUDENT-SERVICE
+            fallbackuri: forward:/departmentServiceFollBack
+
+hystrix:
+  command:
+    fallbackcmd:
+      execution:
+        isolation:
+          thread: timeoutInMilliseconds:4000
+          
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream, info, health
+      
+Eureka:
+  client:
+    register-with-eureka: true
+    fetch-registery: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    instance:
+      hostname: localhost      
+            
